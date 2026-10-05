@@ -1,0 +1,171 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Exploding Image Effect with Reset</title>
+    <style>
+        body {
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            background-color: #111;
+            margin: 0;
+            overflow: hidden;
+            font-family: sans-serif;
+        }
+
+        /* Container holding the image and particles */
+        .image-container {
+            position: relative;
+            width: 960px;
+            height: 720px;
+            cursor: pointer;
+        }
+
+        /* The actual image */
+        .exploding-image {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: opacity 0.1s ease;
+        }
+
+        /* Hidden class for when the image is clicked */
+        .hidden {
+            opacity: 0;
+            pointer-events: none;
+        }
+
+        /* Particle styles */
+        .particle {
+            position: absolute;
+            width: 30px;
+            height: 30px;
+            background-size: 960px 720px; /* Matched to container size */
+            pointer-events: none;
+            animation: explode 0.8s ease-out forwards;
+        }
+
+        /* Animation for the explosion */
+        @keyframes explode {
+            0% {
+                transform: translate(0, 0) rotate(0deg) scale(1);
+                opacity: 1;
+            }
+            100% {
+                transform: translate(var(--x), var(--y)) rotate(var(--r)) scale(0);
+                opacity: 0;
+            }
+        }
+
+        /* Control UI positioning at the bottom */
+        .controls {
+            margin-top: 20px;
+            display: flex;
+            gap: 20px;
+            align-items: center;
+            z-index: 10;
+        }
+
+        .btn {
+            background-color: #333;
+            color: #fff;
+            border: 1px solid #555;
+            padding: 10px 20px;
+            font-size: 1rem;
+            cursor: pointer;
+            border-radius: 4px;
+            text-decoration: none;
+            transition: background 0.2s;
+        }
+
+        .btn:hover {
+            background-color: #444;
+        }
+    </style>
+</head>
+<body>
+    <div class="image-container" id="imgContainer">
+        <img src="85gmc.jpg" alt="Click to Explode" class="exploding-image" id="targetImage">
+    </div>
+
+    <div class="controls">
+        <button class="btn" id="resetBtn">Reset Image</button>
+        
+    </div>
+
+    <script>
+        const sound = new Audio();
+        sound.src = 'noise.mp3';
+        
+        const container = document.getElementById('imgContainer');
+        const image = document.getElementById('targetImage');
+        const resetBtn = document.getElementById('resetBtn');
+
+        container.addEventListener('click', () => {
+            // ALWAYS play the sound on every click
+            sound.volume = 1.0;
+            sound.currentTime = 0;
+            sound.play().catch(e => console.log("Audio play blocked:", e));
+
+            // Skip particle generation if the image has already exploded
+            if (image.classList.contains('hidden')) return;
+
+            image.classList.add('hidden');
+
+            const rows = 10;
+            const cols = 10;
+            const pieceWidth = 960 / cols;
+            const pieceHeight = 720 / rows;
+            const imgSrc = image.src;
+
+            for (let r = 0; r < rows; r++) {
+                for (let c = 0; c < cols; c++) {
+                    const particle = document.createElement('div');
+                    particle.classList.add('particle');
+
+                    particle.style.width = `${pieceWidth}px`;
+                    particle.style.height = `${pieceHeight}px`;
+                    particle.style.left = `${c * pieceWidth}px`;
+                    particle.style.top = `${r * pieceHeight}px`;
+
+                    particle.style.backgroundImage = `url(${imgSrc})`;
+                    particle.style.backgroundSize = `960px 720px`;
+                    particle.style.backgroundPosition = `-${c * pieceWidth}px -${r * pieceHeight}px`;
+
+                    const angle = Math.random() * Math.PI * 2;
+                    const distance = 100 + Math.random() * 200;
+
+                    const x = Math.cos(angle) * distance;
+                    const y = Math.sin(angle) * distance;
+                    const rotation = Math.random() * 720 - 360;
+
+                    particle.style.setProperty('--x', `${x}px`);
+                    particle.style.setProperty('--y', `${y}px`);
+                    particle.style.setProperty('--r', `${rotation}deg`);
+
+                    container.appendChild(particle);
+
+                    particle.addEventListener('animationend', () => {
+                        particle.remove();
+                    });
+                }
+            }
+        });
+
+        // Reset functionality
+        resetBtn.addEventListener('click', () => {
+            // Remove any active particle elements still mid-animation
+            const activeParticles = container.querySelectorAll('.particle');
+            activeParticles.forEach(p => p.remove());
+
+            // Bring the image back
+            image.classList.remove('hidden');
+        });
+    </script>
+	<a href="index.html" style="color: red; font-size: 20px;target="_top" ">Home</a>
+</body>
+</html>

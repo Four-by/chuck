@@ -1,0 +1,167 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>ages.html</title>
+     <style>
+        body {
+            background-color: #008080;
+            color: #c0c0c0;
+            font-family: Arial, sans-serif;
+            margin: 20px;
+        }
+        a { color: #400040; }
+        a:visited { color: #275852; }
+        a:active { color: #80ffff; }
+
+        /* Slideshow Container (First on the left) */
+        #slideshow-container {
+            width: 400px;
+            height: 300px;
+            position: relative;
+            background-color: #004d4d;
+            border: 2px solid #c0c0c0;
+            float: left;
+            margin-right: 20px;
+            margin-bottom: 20px;
+        }
+
+        /* Image styling with smooth fade transition */
+        #slideshow-img {
+            width: 100%;
+            height: 100%;
+            object-fit: contain; 
+            transition: opacity 0.5s ease-in-out;
+            opacity: 1;
+        }
+
+        /* Helper class to handle the fade effect */
+        .fade-out {
+            opacity: 0 !important;
+        }
+
+        /* CHANGED: Text box now explicitly floats left next to the slideshow */
+        .middle-text-box {
+            font-size: 1.2em; 
+            max-width: 600px; 
+            overflow: hidden;
+            float: left;
+            margin-right: 20px;
+            margin-bottom: 20px;
+        }
+
+        /* CHANGED: Switched from float: right to float: left so it links right up against the text */
+        .right-img {
+            float: left;
+            width: 211px;
+            height: 247px;
+            margin-bottom: 20px;
+        }
+
+        /* Ensures elements below stay cleanly separated */
+        .clear-fix {
+            clear: both;
+        }
+
+        /* 📱 MOBILE RESPONSIVE FIXES */
+        @media (max-width: 768px) {
+            #slideshow-container {
+                float: none;         
+                width: 100%;         
+                max-width: 400px;    
+                height: auto;        
+                aspect-ratio: 4 / 3; 
+                margin: 0 auto 20px auto; 
+            }
+
+            .middle-text-box {
+                float: none;
+                max-width: 100%;
+                text-align: center;
+            }
+
+            .right-img {
+                float: none;         
+                display: block;      
+                margin: 0 auto 20px auto; 
+            }
+            
+            .text-container {
+                padding: 10px 0;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- 1. The Slideshow Box (Left) -->
+    <div id="slideshow-container">
+        <img id="slideshow-img" src="cb4.jpg" alt="Slideshow">
+    </div>
+
+    <!-- 2. The Text Block (Middle) -->
+    <div class="middle-text-box">
+        <p>This is just a collection of pictures I came up with, for various years of my life.</p>
+        <p>I would like to thank Dad, for giving me a great childhood, while being both mother and father....... THANKS Dad</p> 
+        <p>(I added a pic of a not so happy Dad's Military pic) :)</p>
+        <p>This tune is for you.. Under the Double Eagle .. or as you would have said... It's in <i>C</i>, and it goes like this..(may have to click anywhere for music)</p>
+    </div>
+
+    <!-- 3. The Dad Image (Immediate Right of the Text) -->
+    <img src="dad.jpg" class="right-img" alt="Dad">
+
+    <!-- Keeps everything cleanly aligned below the floating row -->
+    <div class="clear-fix"></div>
+
+    <div class="text-container" style="font-size: 1.2em; overflow: hidden;"><hr></div>
+
+    <center>
+        <font size="+2"><a href="index.html" target="_top">Home</a></font>
+    </center>
+
+    <script>
+        var dropimages = [
+            "cb4.jpg", "pulp load.jpg", "mewithsugar.jpg", "cccabin.jpg", "bakingcookies.jpg", 
+            "chuckcon.jpg", "dodgepu.jpg", "dad1.jpg", "atdads.jpg", 
+            "riverride.jpg", "aspencade1.jpg", "c.jpg", "cabin.jpg", 
+            "deanpark.jpg", "C&C.jpg", "me.jpg"
+        ];
+
+        var curimageindex = 0;
+        var pause = 3000; 
+
+        function rotateimage() {
+            var imgElement = document.getElementById("slideshow-img");
+            if (!imgElement) return;
+
+            imgElement.classList.add("fade-out");
+
+            setTimeout(function() {
+                curimageindex = (curimageindex < dropimages.length - 1) ? curimageindex + 1 : 0;
+                imgElement.src = dropimages[curimageindex];
+                imgElement.classList.remove("fade-out");
+            }, 500);
+        }
+
+        window.onload = function() {
+            setInterval(rotateimage, pause);
+        };
+    </script>
+	
+<audio id="bg-music" src="doubleeagle.mp3" loop></audio>
+
+<script>
+    function unlockAudio() {
+        var audio = document.getElementById("bg-music");
+        if (audio) {
+            audio.play().catch(function(error) {
+                console.log("Playback prevented, waiting for clear click.");
+            });
+            document.removeEventListener("click", unlockAudio);
+        }
+    }
+    document.addEventListener("click", unlockAudio);
+</script>
+
+</body>
+</html>
