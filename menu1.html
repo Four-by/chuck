@@ -1,0 +1,222 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Responsive 3D Wheel Menu</title>
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+            background-color: #05767C;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            overflow: hidden;
+            user-select: none;
+            touch-action: none; /* Prevents mobile browser from dragging/scrolling the whole page */
+        }
+
+        .applet-container {
+            width: 100%;
+            max-width: 400px;
+            height: 450px;
+            position: relative;
+            perspective: 1200px;
+            perspective-origin: 50% 50%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .wheel-hub {
+            position: relative;
+            width: 240px; /* Slightly narrower to fit smaller phone screens */
+            height: 130px;
+            transform-style: preserve-3d;
+            will-change: transform;
+            transition: transform 0.15s ease-out;
+        }
+
+        .license-plate {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            background-color: #05767C;
+            border: 3px solid #000;
+            box-shadow: inset 0 0 10px rgba(0,0,0,0.2);
+            color: #FF0000;
+            font-weight: bold;
+            font-size: 26px; /* Scaled down slightly for mobile readability */
+            text-decoration: none;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            flex-wrap: wrap;
+            text-align: center;
+            word-break: break-word;
+            cursor: pointer;
+            backface-visibility: visible;
+            transition: background-color 0.2s, color 0.2s, text-shadow 0.2s;
+            letter-spacing: 1px;
+            z-index: 5;
+            text-shadow: 1px 1px 0px #000, 2px 2px 0px #111, 3px 3px 0px #222, 4px 4px 0px #333, 5px 5px 5px rgba(0,0,0,0.6);
+        }
+
+        .license-plate:hover {
+            background-color: #2BC3CF;
+            color: #FFFFFF;
+            text-shadow: 1px 1px 0px #000, 2px 2px 0px #05484d, 3px 3px 0px #022b2e, 4px 4px 6px rgba(0,0,0,0.8);
+        }
+
+        .wheel-cap {
+            position: absolute;
+            width: 346px; /* Adjusted to match smaller diameter */
+            height: 346px;
+            top: 50%;
+            left: 50%;
+            margin-top: -173px;
+            margin-left: -173px;
+            border-radius: 50%;
+            border: 5px solid #000000;
+            box-shadow: 0 0 15px rgba(0,0,0,0.4);
+            background: radial-gradient(circle at center, #FF0000 0%, #000000 15%, #05767C 16%, transparent 26%),
+                        repeating-conic-gradient(from 0deg, #05767C 0deg 20deg, #FF0000 20deg 25deg, #000000 25deg 27deg);
+            backface-visibility: visible;
+            pointer-events: none;
+            z-index: 1;
+        }
+
+        .cap-left {
+            transform: rotateY(90deg) translateZ(-122px);
+        }
+        .cap-right {
+            transform: rotateY(90deg) translateZ(122px);
+        }
+    </style>
+</head>
+<body>
+
+    <div class="applet-container" id="stage">
+        <div class="wheel-hub" id="hub">
+            <div class="wheel-cap cap-left"></div>
+            <div class="wheel-cap cap-right"></div>
+            <a href="index1.html" class="license-plate" target="_top">Cars,Trucks & Bikes</a>
+            <a href="ages.html" class="license-plate" target="_top">Over the years</a>
+            <a href="59f100.html" class="license-plate" target="_top">59 F100 Ford</a>
+            <a href="motorcycles.html" class="license-plate" target="_top">Motorcycles</a>
+            <a href="JD Fun.html" class="license-plate" target="_top">JD Fun</a>
+            <a href="about.html" class="license-plate" target="_top">About me</a>
+            <a href="85gmc.html" class="license-plate" target="_top">1985 GMC</a>
+            <a href="RedB2.html" class="license-plate" target="_top">Bronco ll with Plow</a>
+            <a href="RedB2.html" class="license-plate" target="_top">Bronco ll with Plow</a>
+        </div>
+    </div>
+
+    <script>
+        const stage = document.getElementById('stage');
+        const hub = document.getElementById('hub');
+        const plates = document.querySelectorAll('.license-plate');
+        const totalPlates = plates.length;
+        const radius = 180;
+        let currentRotation = 0;
+        let sideTilt = 0;
+        const baseSpeed = 0.75;
+        let targetSpeed = baseSpeed;
+        let isDragging = false;
+        let isHovered = false;
+        let startY = 0;
+
+        function layoutWheel() {
+            plates.forEach((plate, index) => {
+                const angle = (360 / totalPlates) * index;
+                plate.style.transform = `rotateX(${angle}deg) translateZ(${radius}px)`;
+            });
+        }
+
+        function updateRotation() {
+            if (!isDragging && !isHovered) {
+                currentRotation += targetSpeed;
+            }
+            hub.style.transform = `rotateY(${sideTilt}deg) rotateX(${-currentRotation}deg)`;
+            requestAnimationFrame(updateRotation);
+        }
+
+        // Combined logic for tracking pointer positions (Mouse & Touch)
+        function handleMove(clientX, clientY, targetElement) {
+            if (targetElement.classList.contains('license-plate') || targetElement.closest('.license-plate')) {
+                isHovered = true;
+            } else {
+                isHovered = false;
+            }
+
+            const rect = stage.getBoundingClientRect();
+            const containerCenterX = rect.left + (rect.width / 2);
+            const containerCenterY = rect.top + (rect.height / 2);
+            const deltaX = (clientX - containerCenterX) / (rect.width / 2);
+            sideTilt = deltaX * 45; // Sightly reduced tilt for mobile stability
+
+            if (clientY > containerCenterY) {
+                targetSpeed = -baseSpeed;
+            } else {
+                targetSpeed = baseSpeed;
+            }
+
+            if (!isDragging) return;
+            const deltaY = clientY - startY;
+            currentRotation += deltaY * 0.4;
+            startY = clientY;
+        }
+
+        // DESKTOP EVENTS
+        stage.addEventListener('mousemove', (e) => {
+            handleMove(e.clientX, e.clientY, e.target);
+        });
+
+        stage.addEventListener('mouseleave', () => {
+            sideTilt = 0;
+            targetSpeed = baseSpeed;
+            isHovered = false;
+        });
+
+        window.addEventListener('mousedown', (e) => {
+            if (!stage.contains(e.target)) return;
+            isDragging = true;
+            startY = e.clientY;
+        });
+
+        window.addEventListener('mouseup', () => {
+            isDragging = false;
+        });
+
+        // MOBILE TOUCH EVENTS
+        stage.addEventListener('touchmove', (e) => {
+            if (e.touches.length > 0) {
+                const touch = e.touches[0];
+                // Pass element under touch point since e.target locks on mobile
+                const targetElement = document.elementFromPoint(touch.clientX, touch.clientY) || e.target;
+                handleMove(touch.clientX, touch.clientY, targetElement);
+            }
+        }, { passive: true });
+
+        stage.addEventListener('touchstart', (e) => {
+            if (!stage.contains(e.target)) return;
+            isDragging = true;
+            isHovered = true; // Pauses auto-spin when touched
+            if (e.touches.length > 0) {
+                startY = e.touches[0].clientY;
+            }
+        }, { passive: true });
+
+        window.addEventListener('touchend', () => {
+            isDragging = false;
+            isHovered = false; // Resumes auto-spin when let go
+            sideTilt = 0;
+        });
+
+        layoutWheel();
+        updateRotation();
+    </script>
+</body>
+</html>

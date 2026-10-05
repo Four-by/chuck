@@ -1,0 +1,239 @@
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+   
+    <title>Page 2</title>
+
+    <style>
+        /* Basic Page Styling */
+        body 
+		 {
+    font-family: Arial, sans-serif;
+    background-color: #1D1007;
+    margin: 0;
+    /* Generous bottom padding gives the zoomed cards room without cutting off the links */
+    padding: 20px 20px 120px 20px; 
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+		
+
+        h1 {
+            color: #DAAE65;
+            margin-bottom: 20px;
+            text-align: center;
+        }
+
+        /* The Photo Album Grid Container */
+        .album-container {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); /* Original Size Kept */
+            gap: 20px;
+            width: 100%;
+            max-width: 1200px;
+        }
+
+        /* Individual Photo Cards */
+        .photo-card {
+            background-color: #620036; 			 			
+            border-radius: 8px;
+            overflow: hidden; /* CRITICAL: This hides the image edges when it expands */
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            transition: transform 0.2s ease-in-out;
+        }
+
+        /* Zoom Effect on Hover (Card) */
+        .photo-card:hover {
+            transform: scale(1.9); /* Your Original Huge Zoom */
+            z-index: 10; /* Ensures the zoomed card hovers over nearby images */
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.5); /* Makes zoomed image pop out */
+        }
+
+        /* Image Sizing & Transition */
+        .photo-card img {
+            width: 100%;
+            height: 200px; /* Original Height Kept */
+            object-fit: cover;
+            display: block;
+            transition: transform 0.3s ease-in-out; /* Smooths the image zoom */
+        }
+
+        /* Zoom Effect on Image when Card is Hovered */
+        .photo-card:hover img {
+            transform: scale(1.1); /* Increases image size by 10% */
+        }
+
+        /* Photo Captions */
+        .caption {
+            padding: 15px;
+            font-size: 14px;
+            color: #FFFFFF;
+            text-align: center;
+        }
+
+        /* MOBILE OPTIMIZATIONS (For screens smaller than 600px wide) */
+        @media (max-width: 600px) {
+            body {
+                padding: 10px;
+            }
+            h1 {
+                font-size: 1.35rem; /* Scales heading down so it fits small displays */
+                padding: 0 5px;
+            }
+            .album-container {
+                /* Forces exactly one card per row on mobile phones */
+                grid-template-columns: 1fr; 
+                gap: 20px;
+            }
+            .photo-card img {
+                height: auto; /* Lets the height scale proportionally relative to width */
+                max-height: 250px;
+            }
+            .photo-card:hover {
+                transform: scale(1.05); /* Safe small zoom for mobile so it fits the display edges */
+            }
+            .caption {
+                padding: 12px;
+                font-size: 14px;
+            }
+        }
+    </style>
+	
+</head>
+
+<BODY BGCOLOR="#92CCF0" TEXT="#000000" LINK="#c0c0c0" VLINK="#275852" ALINK="#80ffff">
+
+    <h1>Cars and Trucks from over the years, and a few bikes!</h1>
+
+    <!-- Photo Album Container -->
+    <div class="album-container">
+
+        <!-- Photo Item 1 -->
+        <div class="photo-card">
+            <img src="luv.jpg" alt="2015 Encore">
+            <div class="caption">Chevy Luv</div>
+        </div>
+
+        <!-- Photo Item 2 -->
+        <div class="photo-card">
+            <img src="luv1.jpg" alt="Sunny Beach">
+            <div class="caption">Chevy Luv (formerly Vern's)</div>
+        </div>
+
+        <!-- Photo Item 3 -->
+        <div class="photo-card">
+            <img src="el1.jpg" alt="Cityscape">
+            <div class="caption">1979 El Camino 4spd</div>
+        </div>
+
+        <!-- Photo Item 4 -->
+        <div class="photo-card">
+            <img src="el2.jpg" alt="Green Forest">
+            <div class="caption">1979 El Camino automatic</div>
+        </div>
+
+        <!-- Photo Item 5 -->
+        <div class="photo-card">
+            <img src="78.jpg" alt="Beautiful Mountains">
+            <div class="caption">1978 Chev I converted from a long box fleetside</div>
+        </div>
+
+        <!-- Photo Item 6 -->
+        <div class="photo-card">
+            <img src="2000ranger.jpg" alt="Sunny Beach">
+            <div class="caption">2000 Ranger 4x4</div>
+        </div>
+
+        <!-- Photo Item 7 -->
+        <div class="photo-card">
+            <img src="as.jpg" alt="Cityscape">
+            <div class="caption">1974 Chevy Astro Conversion van</div>
+        </div>
+
+        <!-- Photo Item 8 -->
+        <div class="photo-card">
+            <img src="bbrII.jpg" alt="Green Forest">
+            <div class="caption">My second BroncoII conversion</div>
+        </div>
+
+        <!-- Photo Item 9 -->
+        <div class="photo-card">
+            <img src="br2.jpg" alt="Beautiful Mountains">
+            <div class="caption">1989 Bronco II converted to a pickup</div>
+        </div>
+
+        <!-- Photo Item 10 -->
+        <div class="photo-card">
+            <img src="bronc.jpg" alt="Sunny Beach">
+            <div class="caption">The first Bronco II I converted</div>
+        </div>
+
+        <!-- Photo Item 11 -->
+        <div class="photo-card">
+            <img src="bluebii.jpg" alt="Cityscape">
+            <div class="caption">Bronco II I repainted</div>
+        </div>
+
+        <!-- Photo Item 12 -->
+        <div class="photo-card">
+            <img src="bronco.jpg" alt="Green Forest">
+            <div class="caption"> 1967 Bronco I converted to a roadster style</div>
+        </div>
+
+        <!-- Photo Item 13 -->
+        <div class="photo-card">
+            <img src="blackx90.jpg" alt="Beautiful Mountains">
+            <div class="caption">Suzuki X90 4x4 4spd</div>
+        </div>
+
+        <!-- Photo Item 14 -->
+        <div class="photo-card">
+            <img src="redx90.jpg" alt="Sunny Beach">
+            <div class="caption">X90 Suzuki 4x4 auto</div>
+        </div>
+
+        <!-- Photo Item 15 -->
+        <div class="photo-card">
+            <img src="46dodge.jpg" alt="Cityscape">
+            <div class="caption">1946 Dodge Pickup</div>
+        </div>
+
+        <!-- Photo Item 16 -->
+        <div class="photo-card">
+            <img src="85gmc.jpg" alt="Green Forest">
+            <div class="caption">1985 GMC 1/2 ton 2wd 350 auto</div>
+        </div>
+
+        <!-- Photo Item 17 -->
+        <div class="photo-card">
+            <img src="redchev.jpg" alt="Beautiful Mountains">
+            <div class="caption">Chevy Stepside 4x4</div>
+        </div>
+
+        <!-- Photo Item 18 -->
+        <div class="photo-card">
+            <img src="redranger.jpg" alt="Sunny Beach">
+            <div class="caption">2003 Ford Ranger Edge 2wd auto</div>
+        </div>
+
+        <!-- Photo Item 19 -->
+        <div class="photo-card">
+            <img src="whiteranger.jpg" alt="Cityscape">
+            <div class="caption">2003 Ford Ranger 2wd</div>
+        </div>
+
+        <!-- Photo Item 20 -->
+        <div class="photo-card">
+            <img src="my59.jpg" alt="Green Forest">
+            <div class="caption">1959 Ford F100 300ci 6cyl auto 2wd</div>
+        </div>
+    </div>
+
+    <p><p><a href="page3.html" style="color: red; font-size: 20px;" target="_top"> Page 3</a>
+    <p>
+    <p><center><font size="+2"><a href="index.html" style="color: blue; font-size: 20px;" target="_top">Home</a></font></center>
+ 
+</body>
+</html>

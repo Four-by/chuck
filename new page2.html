@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <title>Framset Layout</title>
+</head>
+
+<frameset cols="375,*">
+    <!-- This nests a row split inside the left 375px column -->
+    <!-- The menu gets 80% of the height, leaving 20% at the bottom -->
+    <frameset rows="20%,20%">
+        <frame src="menu1.html" name="menu" scrolling="yes">
+       <frame src="video_frame.html" name="t_bottom" noresize scrolling="no">
+
+       
+
+    </frameset>
+    
+    <!-- This is your original right column -->
+    <frame src="main.html" name="content" noresize scrolling="yes">
+</frameset>
+
+</html>
