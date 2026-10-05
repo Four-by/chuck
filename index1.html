@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Chuck B's Stuff</title>
+    <style>
+        /* Setup the page layout */
+        body {
+            background-color: #1D1007;
+            color: red;
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            height: 100vh;
+            display: flex;
+            flex-direction: column;
+            overflow: hidden; /* Prevents the main page from double-scrolling */
+        }
+
+        /* This locks your logo and text to the top */
+        .top-frame {
+            background-color: #1D1007;
+            padding: 15px;
+            border-bottom: 3px solid #845434; /* Nice divider line */
+            box-shadow: 0px 4px 10px rgba(0,0,0,0.5);
+            text-align: center;
+        }
+
+        .top-frame p {
+            font-size: 20px;
+            max-width: 800px;
+            margin: 10px auto;
+        }
+
+        /* This forces the embedded page to fill the rest of the screen */
+        .content-frame {
+            flex-grow: 1;
+            border: none;
+            width: 100%;
+            height: 100%;
+        }
+    </style>
+</head>
+<body>
+
+    <!-- TOP HEADER SECTION -->
+	<div style="display: flex; flex-wrap: wrap; align-items: center; gap: 20px; justify-content: center;">
+  
+  <img src="logo1.jpg" alt="Description" style="width: 100%; max-width: 400px; height: auto;">
+  
+  <p style="margin: 0; font-size: 1.2rem; flex: 1; min-width: 300px;"> 
+    Hello.... I'm Chuck, and here I will have stuff... mostly cars, trucks, motorcycles, lawn tractors, etc. that I have had, rebuilt from wrecks, or refurbished from old. 
+    I have enjoyed doing these things all my life, until I have now become too old to do so. Now I can only talk about it, and reminisce...like old guys do.
+  </p>
+
+</div>
+	
+	
+	
+	
+    
+
+    <!-- MAIN EMBEDDED PAGE BELOW -->
+    <iframe class="content-frame" src="Cars and Trucks.html" title="Main Content">
+        
+    </iframe>
+
+</body>
+</html>

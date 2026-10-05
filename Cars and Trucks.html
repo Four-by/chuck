@@ -1,0 +1,231 @@
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>My Photo Album</title>
+   
+    <style>
+        /* Basic Page Styling */
+        body  {
+    font-family: Arial, sans-serif;
+    background-color: #1D1007;
+    margin: 0;
+    /* Generous bottom padding gives the zoomed cards room without cutting off the links */
+    padding: 20px 20px 120px 20px; 
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+	
+
+        h1 {
+            color: #DAAE65;
+            margin-bottom: 20px;
+            text-align: center;
+        }
+
+        /* The Photo Album Grid Container */
+        .album-container {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); /* Original Size Kept */
+            gap: 20px;
+            width: 100%;
+            max-width: 1200px;
+        }
+
+        /* Individual Photo Cards */
+        .photo-card {
+            background-color: #1D1007;                         
+            border-radius: 8px;
+            overflow: hidden; /* CRITICAL: This hides the image edges when it expands */
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            transition: transform 0.2s ease-in-out;
+        }
+
+        /* Zoom Effect on Hover (Card) */
+        .photo-card:hover {
+            transform: scale(1.6); /* Your Original Huge Zoom */
+            z-index: 10; /* Ensures the zoomed card hovers over nearby images */
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.5); /* Makes zoomed image pop out */
+        }
+
+        /* Image Sizing & Transition */
+        .photo-card img {
+            width: 100%;
+            height: 200px; /* Original Height Kept */
+            object-fit: cover;
+            display: block;
+            transition: transform 0.3s ease-in-out; /* Smooths the image zoom */
+        }
+
+        /* Zoom Effect on Image when Card is Hovered */
+        .photo-card:hover img {
+            transform: scale(1.1); /* Increases image size by 10% */
+        }
+
+        /* Photo Captions */
+        .caption {
+            padding: 15px;
+            font-size: 14px;
+            color: #FFFFFF;
+            text-align: center;
+        }
+
+        /* MOBILE OPTIMIZATIONS (For screens smaller than 600px wide) */
+        @media (max-width: 600px) {
+            body {
+                padding: 10px;
+            }
+            h1 {
+                font-size: 1.35rem; /* Scales heading down so it fits small displays */
+                padding: 0 5px;
+            }
+            .album-container {
+                /* Shifts layout to a clean grid alignment for standard phones */
+                grid-template-columns: repeat(auto-fit, minmax(140px, 1fr)); 
+                gap: 12px;
+            }
+            .photo-card img {
+                height: 140px; /* Scales card profile cleanly down to match phone screens */
+            }
+            .photo-card:hover {
+                transform: scale(1.1); /* Tames the 1.6 scaling down to 10% on mobile so parts aren't hidden off-screen */
+            }
+            .caption {
+                padding: 8px;
+                font-size: 12px;
+            }
+        }
+    </style>
+    
+</head>
+
+
+<BODY BGCOLOR="#92CCF0" TEXT="#000000" LINK="#c0c0c0" VLINK="#275852" ALINK="#80ffff">
+
+    <h1>Cars and Trucks from over the years in random order.., and some bikes!</h1>
+
+    <!-- Photo Album Container -->
+    <div class="album-container">
+
+        <!-- Photo Item 1 -->
+        <div class="photo-card">
+            <img src="Encore.jpg" alt="2015 Encore">
+            <div class="caption">2015 Buick Encore</div>
+        </div>
+
+        <!-- Photo Item 2 -->
+        <div class="photo-card">
+            <img src="eqltz.jpg" alt="Sunny Beach">
+            <div class="caption">2016 Chevy Equinox</div>
+        </div>
+
+        <!-- Photo Item 3 -->
+        <div class="photo-card">
+            <img src="1984s15.jpg" alt="Cityscape">
+            <div class="caption">1984 S15 GMC</div>
+        </div>
+
+        <!-- Photo Item 4 -->
+        <div class="photo-card">
+            <img src="1998jeep.jpg" alt="Green Forest">
+            <div class="caption">1998 Jeep Wrangler</div>
+        </div>
+
+        <!-- Photo Item 5 -->
+        <div class="photo-card">
+            <img src="2013malibu.jpg" alt="Beautiful Mountains">
+            <div class="caption">2013 Chevy Malibu</div>
+        </div>
+
+        <!-- Photo Item 6 -->
+        <div class="photo-card">
+            <img src="nox3.jpg" alt="Sunny Beach">
+            <div class="caption">2013 Chevy Equinox</div>
+        </div>
+
+        <!-- Photo Item 7 -->
+        <div class="photo-card">
+            <img src="w100.jpg" alt="Cityscape">
+            <div class="caption">1965 Dodge A100</div>
+        </div>
+
+        <!-- Photo Item 8 -->
+        <div class="photo-card">
+            <img src="1959f100.jpg" alt="Green Forest">
+            <div class="caption">1959 F100</div>
+        </div>
+
+        <!-- Photo Item 9 -->
+        <div class="photo-card">
+            <img src="1959trh.jpg" alt="Beautiful Mountains">
+            <div class="caption">1959 Triumph Herald</div>
+        </div>
+
+        <!-- Photo Item 10 -->
+        <div class="photo-card">
+            <img src="sst.jpg" alt="Sunny Beach">
+            <div class="caption">Scout Sport Top and Scorpion Super Stinger</div>
+        </div>
+
+        <!-- Photo Item 11 -->
+        <div class="photo-card">
+            <img src="1972chevy.jpg" alt="Cityscape">
+            <div class="caption">1972 Chevy Cheyenne</div>
+        </div>
+
+        <!-- Photo Item 12 -->
+        <div class="photo-card">
+            <img src="1969amx.jpg" alt="Green Forest">
+            <div class="caption">1969 AMX 290ci 4spd</div>
+        </div>
+
+        <!-- Photo Item 13 -->
+        <div class="photo-card">
+            <img src="toy.jpg" alt="Beautiful Mountains">
+            <div class="caption">1982 Toyota with 33" tires</div>
+        </div>
+
+        <!-- Photo Item 14 -->
+        <div class="photo-card">
+            <img src="1984ranger.jpg" alt="Sunny Beach">
+            <div class="caption">1984 Ranger was a repairable</div>
+        </div>
+
+        <!-- Photo Item 15 -->
+        <div class="photo-card">
+            <img src="1984f100.jpg" alt="Cityscape">
+            <div class="caption">1984 Ford stepside</div>
+        </div>
+
+        <div class="photo-card">
+            <img src="sx4.jpg" alt="Description">
+            <div class="caption">1982 AMC SX4</div>
+        </div>
+          
+        <div class="photo-card">
+            <img src="1988toy.jpg" alt="Description">
+            <div class="caption">1988 Toyota 4x4</div>
+        </div>
+          
+        <div class="photo-card">
+            <img src="1983d50.jpg" alt="Description">
+            <div class="caption">1983 D50 Dodge</div>
+        </div>
+          
+        <div class="photo-card">
+            <img src="1990s10.jpg" alt="Description">
+            <div class="caption">1990 Chevy S10 with Black Package</div>
+        </div>
+         
+        <div class="photo-card">
+            <img src="72.jpg" alt="Description">
+            <div class="caption">1972 Chevy 4x4</div>
+        </div>
+    </div>
+     
+    <p><p>
+                     
+    <a href="page2.html" target="_top" style="color: red; font-size: 20px;">Page 2</a>
+</body>
+</html>
