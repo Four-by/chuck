@@ -10,8 +10,18 @@
             color: #00003C;
             font-family: Arial, sans-serif;
             line-height: 1.6;
-            margin: 20px;
+            margin: 0;
+            padding: 20px;
+            display: flex;
+            justify-content: center;
         }
+
+        /* Constrains the layout width and centers it on the screen */
+        .page-wrapper {
+            max-width: 800px;
+            width: 100%;
+        }
+
         a:link { color: #D4D0C8; }
         a:visited { color: #FF6600; }
         a:active { color: #FF3300; }
@@ -20,6 +30,7 @@
             text-align: center;
             font-size: 2rem;
             text-decoration: underline;
+            margin-bottom: 2rem;
         }
         
         p {
@@ -29,14 +40,14 @@
 
         .img-right {
             float: right;
-            margin-left: 15px;
+            margin-left: 20px;
             margin-bottom: 15px;
             border: 0;
         }
 
         .img-left {
             float: left;
-            margin-right: 15px;
+            margin-right: 20px;
             margin-bottom: 15px;
             border: 0;
         }
@@ -45,12 +56,13 @@
             border: 0;
             border-top: 2px solid #00003C;
             clear: both;
-            margin: 25px 0;
+            margin: 30px 0;
         }
 
         .nav-container {
             text-align: center;
-            margin: 30px 0;
+            margin: 40px 0;
+            clear: both;
         }
 
         .btn-mount {
@@ -58,8 +70,8 @@
             font-weight: bold;
             text-decoration: none;
             color: #5A5F96;
-            display: inline-block;
-            margin-bottom: 20px;
+            display: block;
+            margin-bottom: 15px;
         }
 
         .next-page {
@@ -72,36 +84,41 @@
             color: red;
             font-size: 1.5rem;
             text-decoration: none;
+            display: inline-block;
         }
     </style>
 </head>
 <body>
 
-    <h1>The following describes the installation of a 300 Ford six into my 1959 F100</h1>
+    <div class="page-wrapper">
 
-    <p>
-        <img src="Front view1.jpg" alt="Front view of the engine" width="324" height="150" class="img-right">
-        Since I wanted to continue driving my truck as long as possible, and did not want a lot of down time, I had to do a lot of measuring beforehand. With the old 223 in place it was quite difficult getting accurate dimensions. I also wanted to use the stock front frame perches, which meant I needed to make front mounts for my 300. Finally I was ready with my measurements and a plan. I decided to use 3/16 thick iron for the mounts, and then use a cross tie to reinforce them... Like this...I am quite sure you could use 1/4 iron, and not have to use a cross tie.
-    </p>
+        <h1>The following describes the installation of a 300 Ford six into my 1959 F100</h1>
 
-    <hr>
+        <p>
+            <img src="Front view1.jpg" alt="Front view of the engine" width="324" height="150" class="img-right">
+            Since I wanted to continue driving my truck as long as possible, and did not want a lot of down time, I had to do a lot of measuring beforehand. With the old 223 in place it was quite difficult getting accurate dimensions. I also wanted to use the stock front frame perches, which meant I needed to make front mounts for my 300. Finally I was ready with my measurements and a plan. I decided to use 3/16 thick iron for the mounts, and then use a cross tie to reinforce them... Like this...I am quite sure you could use 1/4 iron, and not have to use a cross tie.
+        </p>
 
-    <p>
-        <img src="fan1.jpg" alt="Fan clearance view" class="img-left">
-        The 300 is approx. 2 inches longer than the 223 therefore I was concerned about having enough clearance between the radiator and the water pump so I kept the engine back as far as I could. As it turned out, I had plenty of clearance.. I was able to use the stock fan/waterpump setup, and still had 2 inches to spare ( See picture... ). The mount patterns included in these pages have been modified to move the engine forward 1/2 from my original plans. ....Allows for a little more clearance at the firewall.
-    </p>
+        <hr>
 
-    <hr>
+        <p>
+            <img src="fan1.jpg" alt="Fan clearance view" class="img-left">
+            The 300 is approx. 2 inches longer than the 223 therefore I was concerned about having enough clearance between the radiator and the water pump so I kept the engine back as far as I could. As it turned out, I had plenty of clearance.. I was able to use the stock fan/waterpump setup, and still had 2 inches to spare ( See picture... ). The mount patterns included in these pages have been modified to move the engine forward 1/2 from my original plans. ....Allows for a little more clearance at the firewall.
+        </p>
 
-    <p>
-        <img src="rad mod1.jpg" alt="Radiator modification" class="img-left">
-        On the subject of radiators, I used the radiator from my donor vehicle (1978 F150), that way my transmission cooler lines simply had to be reconnected without any mod necessary. I did have to add a 2 X 18 X 1/8 piece to the sides of the 78 radiator for the mounting, but it was simple enough.
-    </p>
+        <hr>
 
-    <div class="nav-container">
-        <a href="mounts.html" class="btn-mount">Mount pattern</a>
-        <a href="Page%202.html" class="next-page">Next Page</a>
-        <a href="index.html" class="home-link">Home</a>
+        <p>
+            <img src="rad mod1.jpg" alt="Radiator modification" class="img-left">
+            On the subject of radiators, I used the radiator from my donor vehicle (1978 F150), that way my transmission cooler lines simply had to be reconnected without any mod necessary. I did have to add a 2 X 18 X 1/8 piece to the sides of the 78 radiator for the mounting, but it was simple enough.
+        </p>
+
+        <div class="nav-container">
+            <a href="mounts.html" class="btn-mount">Mount pattern</a>
+            <a href="Page%202.html" class="next-page">Next Page</a>
+            <a href="index.html" class="home-link">Home</a>
+        </div>
+
     </div>
 
 </body>
