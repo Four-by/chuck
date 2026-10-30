@@ -1,0 +1,335 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Custom Vehicle Slot Machine</title>
+    <style>
+        body {
+            background-color: #1a1a1a;
+            color: #ffffff;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            min-height: 100vh;
+            margin: 0;
+        }
+
+        .slot-machine {
+            background: linear-gradient(145deg, #222, #050505);
+            border: 8px solid #ffd700;
+            border-radius: 20px;
+            padding: 40px;
+            box-shadow: 0 0 40px rgba(255, 215, 0, 0.4);
+            text-align: center;
+            width: 650px; 
+        }
+
+        h1 {
+            color: #ffd700;
+            margin-top: 0;
+            font-size: 2.5rem;
+            text-transform: uppercase;
+            letter-spacing: 4px;
+            text-shadow: 0 0 15px rgba(255, 215, 0, 0.6);
+        }
+
+        .reel-container {
+            display: flex;
+            justify-content: space-around;
+            background-color: #111;
+            padding: 25px;
+            border-radius: 15px;
+            border: 4px solid #ffd700;
+            margin-bottom: 30px;
+        }
+
+        .reel {
+            background-color: #fff;
+            width: 150px;   
+            height: 150px;  
+            border-radius: 10px;
+            box-shadow: inset 0 0 15px rgba(0,0,0,0.2);
+            overflow: hidden;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        /* Forces your vehicle images to fit inside the slots perfectly */
+        .reel img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover; 
+        }
+
+        .spinning {
+            animation: blur 0.08s infinite alternate;
+        }
+
+        @keyframes blur {
+            0% { filter: blur(0px); transform: scaleY(1); }
+            100% { filter: blur(6px); transform: scaleY(0.85); }
+        }
+
+        .controls {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 20px;
+        }
+
+        #spin-button {
+            background: linear-gradient(180deg, #ff4e50, #f9d423);
+            border: none;
+            color: #000;
+            padding: 18px 50px;
+            font-size: 1.8rem;
+            font-weight: bold;
+            letter-spacing: 1px;
+            border-radius: 50px;
+            cursor: pointer;
+            box-shadow: 0 5px 20px rgba(249, 212, 35, 0.5);
+            transition: transform 0.1s, box-shadow 0.1s;
+        }
+
+        #spin-button:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 25px rgba(249, 212, 35, 0.7);
+        }
+
+        #spin-button:active {
+            transform: translateY(1px);
+            box-shadow: 0 3px 10px rgba(249, 212, 35, 0.5);
+        }
+
+        #spin-button:disabled {
+            background: #555;
+            color: #888;
+            cursor: not-allowed;
+            box-shadow: none;
+            transform: none;
+        }
+
+        #message {
+            font-size: 1.5rem;
+            font-weight: bold;
+            min-height: 40px;
+            color: #ffd700;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="slot-machine">
+        <h1>Motorcycle Slots</h1>
+        
+        <div class="reel-container">
+            <!-- Starting Default Image -->
+            <div id="reel1" class="reel"><img src="tn1990venture.jpg" alt="Vehicle"></div>
+            <div id="reel2" class="reel"><img src="tn2004harley.jpg" alt="Vehicle"></div>
+            <div id="reel3" class="reel"><img src="tn2005nomad.jpg" alt="Vehicle"></div>
+        </div>
+
+        <div class="controls">
+            <button id="spin-button">SPIN</button>
+            <div id="message">Press SPIN to Play!</div>
+        </div>
+    </div>
+
+    <script>
+        // STEP 1: Put your actual image filenames here!
+        // Make sure these images are saved in the same folder as this HTML file.
+        const vehicleImages = [
+            'tn1990venture.jpg',
+            'tn2004harley.jpg',
+            'tn2005nomad.jpg',
+            'tn2000nomad.jpg',
+            'tncbx.jpg', 
+			'tnz1r.jpg',
+			
+			
+        ];
+        
+        const reel1 = document.getElementById('reel1');
+        const reel2 = document.getElementById('reel2');
+        const reel3 = document.getElementById('reel3');
+        const spinButton = document.getElementById('spin-button');
+        const message = document.getElementById('message');
+
+        let audioCtx = null;
+
+        function initAudio() {
+            if (!audioCtx) {
+                audioCtx = new (window.AudioContext || window.webkitAudioContext)();
+            }
+        }
+
+        function playSound(type) {
+            initAudio();
+            if (!audioCtx) return;
+
+            const now = audioCtx.currentTime;
+
+            if (type === 'tick') {
+                const osc = audioCtx.createOscillator();
+                const gain = audioCtx.createGain();
+                osc.connect(gain); gain.connect(audioCtx.destination);
+                osc.type = 'sine';
+                osc.frequency.setValueAtTime(987.77, now);
+                gain.gain.setValueAtTime(0.12, now);
+                gain.gain.exponentialRampToValueAtTime(0.01, now + 0.08);
+                osc.start(now); osc.stop(now + 0.08);
+            } 
+               else if (type === 'siren') {
+                // --- ULTRA-LOUD TRIPLE-LAYERED CASINO SIREN ---
+                const osc1 = audioCtx.createOscillator();
+                const osc2 = audioCtx.createOscillator();
+                const osc3 = audioCtx.createOscillator(); // Extra wave layer added for punch
+                const gain = audioCtx.createGain();
+                
+                osc1.connect(gain);
+                osc2.connect(gain);
+                osc3.connect(gain);
+                gain.connect(audioCtx.destination);
+                
+                osc1.type = 'sawtooth';
+                osc2.type = 'square';
+                osc3.type = 'sawtooth'; // Deep secondary grit texture
+                
+                // Bumping the volume value from 0.08 up to 0.35 (Over 4x volume output!)
+                gain.gain.setValueAtTime(0.35, now);
+                gain.gain.linearRampToValueAtTime(0.35, now + 1.2);
+                gain.gain.exponentialRampToValueAtTime(0.001, now + 1.5); 
+                
+                const cycleTime = 0.22; // Slightly faster wail for maximum urgency
+                for (let i = 0; i < 7; i++) {
+                    const baseTime = now + (i * cycleTime);
+                    
+                    // High piercing pitch values
+                    osc1.frequency.setValueAtTime(800, baseTime);
+                    osc1.frequency.linearRampToValueAtTime(1400, baseTime + (cycleTime / 2));
+                    
+                    osc2.frequency.setValueAtTime(815, baseTime); // Detuned for ear-catching friction
+                    osc2.frequency.linearRampToValueAtTime(1415, baseTime + (cycleTime / 2));
+
+                    osc3.frequency.setValueAtTime(400, baseTime); // Deep sub-siren undertone
+                    osc3.frequency.linearRampToValueAtTime(700, baseTime + (cycleTime / 2));
+                }
+                
+                osc1.start(now); osc1.stop(now + 1.5);
+                osc2.start(now); osc2.stop(now + 1.5);
+                osc3.start(now); osc3.stop(now + 1.5);
+            }
+            
+            else if (type === 'win') {
+                // Keep the premium chimes for a 2-of-a-kind match
+                const bassFrequencies = [130.81, 164.81, 196.00];
+                bassFrequencies.forEach(freq => {
+                    const bassOsc = audioCtx.createOscillator();
+                    const bassGain = audioCtx.createGain();
+                    bassOsc.connect(bassGain); bassGain.connect(audioCtx.destination);
+                    bassOsc.type = 'triangle';
+                    bassOsc.frequency.setValueAtTime(freq, now);
+                    bassGain.gain.setValueAtTime(0.1, now);
+                    bassGain.gain.exponentialRampToValueAtTime(0.001, now + 0.8);
+                    bassOsc.start(now); bassOsc.stop(now + 0.8);
+                });
+
+                const melodyOsc = audioCtx.createOscillator();
+                const melodyGain = audioCtx.createGain();
+                melodyOsc.connect(melodyGain); melodyGain.connect(audioCtx.destination);
+                melodyOsc.type = 'square';
+                melodyGain.gain.setValueAtTime(0.08, now);
+                melodyGain.gain.exponentialRampToValueAtTime(0.001, now + 0.8);
+                
+                const notes = [523.25, 659.25, 783.99, 1046.50, 1318.51, 1567.98, 2093.00]; 
+                notes.forEach((note, index) => {
+                    melodyOsc.frequency.setValueAtTime(note, now + (index * 0.06));
+                });
+                
+                melodyOsc.start(now); melodyOsc.stop(now + 0.8);
+            } 
+            else if (type === 'lose') {
+                const osc = audioCtx.createOscillator();
+                const gain = audioCtx.createGain();
+                osc.connect(gain); gain.connect(audioCtx.destination);
+                osc.type = 'triangle';
+                osc.frequency.setValueAtTime(180, now);
+                gain.gain.setValueAtTime(0.05, now);
+                gain.gain.exponentialRampToValueAtTime(0.01, now + 0.15);
+                osc.start(now); osc.stop(now + 0.15);
+            }
+        }
+
+        function getRandomImage() {
+            return vehicleImages[Math.floor(Math.random() * vehicleImages.length)];
+        }
+
+        function spin() {
+            initAudio(); 
+            spinButton.disabled = true;
+            message.textContent = "Spinning the garage...";
+
+            reel1.classList.add('spinning');
+            reel2.classList.add('spinning');
+            reel3.classList.add('spinning');
+
+            let cycleCount = 0;
+            const spinInterval = setInterval(() => {
+                // Change the inner HTML to an image tag during spinning
+                reel1.innerHTML = `<img src="${getRandomImage()}">`;
+                reel2.innerHTML = `<img src="${getRandomImage()}">`;
+                reel3.innerHTML = `<img src="${getRandomImage()}">`;
+                
+                playSound('tick');
+                cycleCount++;
+                
+                if (cycleCount >= 20) {
+                    clearInterval(spinInterval);
+                    determineResult();
+                }
+            }, 80);
+        }
+
+          function determineResult() {
+            const winRate = 0.50; 
+            let res1, res2, res3;
+
+            if (Math.random() < winRate) {
+                const forcedWinImage = getRandomImage();
+                res1 = forcedWinImage; res2 = forcedWinImage; res3 = forcedWinImage;
+            } else {
+                res1 = getRandomImage(); res2 = getRandomImage(); res3 = getRandomImage();
+            }
+
+            reel1.innerHTML = `<img src="${res1}">`;
+            reel2.innerHTML = `<img src="${res2}">`;
+            reel3.innerHTML = `<img src="${res3}">`;
+
+            reel1.classList.remove('spinning');
+            reel2.classList.remove('spinning');
+            reel3.classList.remove('spinning');
+
+            // --- SEPARATED WIN SOUND LOGIC ---
+            if (res1 === res2 && res2 === res3) {
+                message.textContent = "💥 GRAND JACKPOT! 💥";
+                playSound('siren'); // 3-of-a-kind gets the intensive siren!
+            } else if (res1 === res2 || res2 === res3 || res1 === res3) {
+                message.textContent = "😃 2-of-a-kind! Nice! 😃";
+                playSound('win');   // 2-of-a-kind gets the happy celebration chimes
+            } else {
+                message.textContent = "Try Again!";
+                playSound('lose');
+            }
+
+            spinButton.disabled = false;
+        }
+
+        spinButton.addEventListener('click', spin);
+    </script>
+
+</body>
+</html>
